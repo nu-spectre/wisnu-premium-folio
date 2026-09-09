@@ -1,24 +1,52 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { useSuspenseQuery } from "@tanstack/react-query";
+import { siteQuery } from "@/lib/queries";
+import { seo } from "@/lib/seo";
+import { SiteShell } from "@/components/site/SiteShell";
+import { Hero } from "@/components/sections/Hero";
+import { AboutSection } from "@/components/sections/AboutSection";
+import { PhotoSection } from "@/components/sections/PhotoSection";
+import { ProjectGrid } from "@/components/sections/ProjectGrid";
+import { SkillsSection } from "@/components/sections/SkillsSection";
+import { ServicesSection } from "@/components/sections/ServicesSection";
+import { Marquee } from "@/components/site/Marquee";
+import { ContactSection } from "@/components/sections/ContactSection";
 
-// No head() here: the home route inherits title/description/og/twitter from
-// __root.tsx, and ships no og:image so serve-time hosting can inject the
-// project's social preview (explicit og:image or latest screenshot).
 export const Route = createFileRoute("/")({
-  component: Index,
+  loader: ({ context }) => context.queryClient.ensureQueryData(siteQuery),
+  head: () => ({
+    meta: seo({
+      title: "Wisnu Akbar Aridho — Digital Portfolio",
+      description: "Portfolio of Wisnu Akbar Aridho — showcasing selected projects, skills, experience, and digital work.",
+    }),
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "Person",
+          name: "Wisnu Akbar Aridho",
+          jobTitle: "Creative Digital Professional",
+          address: { "@type": "PostalAddress", addressCountry: "ID" },
+        }),
+      },
+    ],
+  }),
+  component: HomePage,
 });
 
-// IMPORTANT: Replace this placeholder. See ./README.md for routing conventions.
-function Index() {
+function HomePage() {
+  const { data } = useSuspenseQuery(siteQuery);
   return (
-    <div
-      className="flex min-h-screen items-center justify-center"
-      style={{ backgroundColor: "#fcfbf8" }}
-    >
-      <img
-        data-lovable-blank-page-placeholder="REMOVE_THIS"
-        src="https://cdn.gpteng.co/blank-app-v1.svg"
-        alt="Your app will live here!"
-      />
-    </div>
+    <SiteShell socialLinks={data.socialLinks}>
+      <Hero profile={data.profile} />
+      <AboutSection profile={data.profile} />
+      <PhotoSection profile={data.profile} />
+      <ProjectGrid projects={data.featuredProjects} />
+      <Marquee />
+      <SkillsSection skills={data.skills} />
+      <ServicesSection services={data.services} />
+      <ContactSection profile={data.profile} socialLinks={data.socialLinks} />
+    </SiteShell>
   );
 }

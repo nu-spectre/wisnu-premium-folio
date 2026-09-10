@@ -9,7 +9,7 @@ import { ConfirmDelete, EmptyState, PageTitle, RowActions, Skeleton } from "@/co
 import type { Project } from "@/lib/types";
 
 export const Route = createFileRoute("/_authenticated/admin/projects/")({
-  validateSearch: (s: Record<string, unknown>) => ({ new: s.new === true || s.new === "true" ? true : undefined }),
+  validateSearch: (s: Record<string, unknown>) => ({ new: s['new'] === true || s['new'] === "true" ? true : undefined }),
   component: ProjectsAdmin,
 });
 
@@ -34,7 +34,7 @@ function ProjectsAdmin() {
 
   useEffect(() => {
     if (search.new) {
-      navigate({ to: "/admin/projects", search: {}, replace: true });
+      navigate({ to: "/admin/projects", search: { new: undefined }, replace: true });
       void createDraft();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

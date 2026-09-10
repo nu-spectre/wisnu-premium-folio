@@ -66,6 +66,6 @@ export const getProjectBySlug = createServerFn({ method: "GET" })
     ]);
     const list = all ?? [];
     const idx = list.findIndex((p) => p.slug === project.slug);
-    const next = list.length > 1 ? list[(idx + 1) % list.length] : null;
+    const next = list.length > 1 ? (list[(idx + 1) % list.length] ?? null) : null;
     return { project, images: images ?? [], next };
   });

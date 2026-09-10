@@ -23,8 +23,8 @@ interface Props<T extends Row, F extends object> {
   renderRow: (row: T) => ReactNode;
   renderForm: (form: F, set: <K extends keyof F>(k: K, v: F[K]) => void) => ReactNode;
   labelOf: (row: T) => string;
-  openNew?: boolean;
-  onOpenedNew?: () => void;
+  openNew?: boolean | undefined;
+  onOpenedNew?: (() => void) | undefined;
 }
 
 /** Generic list + modal editor with reorder and delete, reused across skills/experience/services/socials. */
@@ -53,7 +53,7 @@ export function SimpleCrud<T extends Row, F extends object>(p: Props<T, F>) {
   async function save(e: FormEvent) {
     e.preventDefault();
     const parsed = p.schema.safeParse(form);
-    if (!parsed.success) return void toast.error(parsed.error.issues[0].message);
+    if (!parsed.success) return void toast.error(parsed.error.issues[0]?.message ?? "Invalid input");
     setSaving(true);
     const payload = p.toRow(parsed.data as F);
     const res =

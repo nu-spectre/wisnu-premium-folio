@@ -20,7 +20,7 @@ function SettingsAdmin() {
   async function change(e: FormEvent) {
     e.preventDefault();
     const parsed = schema.safeParse({ current, next });
-    if (!parsed.success) return void toast.error(parsed.error.issues[0].message);
+    if (!parsed.success) return void toast.error(parsed.error.issues[0]?.message ?? "Invalid input");
     setBusy(true);
     const { error } = await supabase.auth.updateUser({ password: parsed.data.next, current_password: parsed.data.current } as never);
     setBusy(false);

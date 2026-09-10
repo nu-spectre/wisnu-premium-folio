@@ -34,7 +34,7 @@ export function SkillsSection({ skills }: { skills: Skill[] }) {
                   {cat}
                 </motion.p>
                 <ul className="flex flex-wrap gap-x-3 gap-y-3">
-                  {groups[cat].map((s, i) => (
+                  {(groups[cat] ?? []).map((s, i) => (
                     <motion.li
                       key={s.id}
                       initial={{ opacity: 0, y: 16, scale: 0.96 }}

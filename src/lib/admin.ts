@@ -55,7 +55,8 @@ export function useInvalidate() {
 export async function reorder<T extends { id: string; sort_order: number }>(table: Table, items: T[], from: number, to: number) {
   if (to < 0 || to >= items.length) return;
   const next = [...items];
-  const [moved] = next.splice(from, 1);
+  const moved = next.splice(from, 1)[0];
+  if (!moved) return;
   next.splice(to, 0, moved);
   await Promise.all(next.map((it, i) => supabase.from(table).update({ sort_order: i + 1 }).eq("id", it.id)));
 }

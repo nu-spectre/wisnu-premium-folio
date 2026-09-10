@@ -37,7 +37,7 @@ function AboutAdmin() {
     e.preventDefault();
     if (!form) return;
     const parsed = schema.safeParse(form);
-    if (!parsed.success) return void toast.error(parsed.error.issues[0].message);
+    if (!parsed.success) return void toast.error(parsed.error.issues[0]?.message ?? "Invalid input");
     setSaving(true);
     const { error } = await supabase.from("profiles").upsert({ id: 1, ...parsed.data, profile_image_url: form.profile_image_url, resume_url: form.resume_url });
     setSaving(false);

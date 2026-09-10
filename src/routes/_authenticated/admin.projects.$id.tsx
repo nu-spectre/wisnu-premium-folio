@@ -66,7 +66,7 @@ function ProjectEditor() {
       client: form.client ?? "", role: form.role ?? "", project_url: form.project_url ?? "", github_url: form.github_url ?? "",
       overview: form.overview ?? "", challenge: form.challenge ?? "", solution: form.solution ?? "", process: form.process ?? "", result: form.result ?? "",
     });
-    if (!parsed.success) return void toast.error(parsed.error.issues[0].message);
+    if (!parsed.success) return void toast.error(parsed.error.issues[0]?.message ?? "Invalid input");
     setSaving(true);
     const d = parsed.data;
     const { error } = await supabase.from("projects").update({
@@ -104,7 +104,7 @@ function ProjectEditor() {
 
   return (
     <form onSubmit={save}>
-      <Link to="/admin/projects" className="mb-4 inline-flex items-center gap-2 text-xs text-muted-foreground hover:text-foreground"><ArrowLeft className="h-3 w-3" /> Projects</Link>
+      <Link to="/admin/projects" search={{ new: undefined }} className="mb-4 inline-flex items-center gap-2 text-xs text-muted-foreground hover:text-foreground"><ArrowLeft className="h-3 w-3" /> Projects</Link>
       <PageTitle
         title={form.title || "Untitled"}
         subtitle={form.published ? "Published — visible on the site" : "Draft — hidden from visitors"}
@@ -168,7 +168,7 @@ function ProjectEditor() {
             <ImageField label="Thumbnail" value={form.thumbnail_url} onChange={(v) => set("thumbnail_url", v)} folder={`projects/${id}`} />
             <ImageField label="Hero image" value={form.hero_image_url} onChange={(v) => set("hero_image_url", v)} folder={`projects/${id}`} />
           </Panel>
-          <button type="button" onClick={() => navigate({ to: "/admin/projects" })} className="w-full text-center text-xs text-muted-foreground hover:text-foreground">Back to list</button>
+          <button type="button" onClick={() => navigate({ to: "/admin/projects", search: { new: undefined } })} className="w-full text-center text-xs text-muted-foreground hover:text-foreground">Back to list</button>
         </div>
       </div>
     </form>

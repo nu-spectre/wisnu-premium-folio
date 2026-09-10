@@ -87,9 +87,9 @@ function Lightbox({ images, index, onClose, onNav }: { images: ProjectImage[]; i
             <ArrowRight className="h-4 w-4" />
           </button>
           <motion.img
-            key={images[index].id}
-            src={images[index].image_url}
-            alt={images[index].caption ?? ""}
+            key={images[index]?.id}
+            src={images[index]?.image_url}
+            alt={images[index]?.caption ?? ""}
             initial={{ scale: 0.94, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             transition={{ duration: 0.5, ease }}

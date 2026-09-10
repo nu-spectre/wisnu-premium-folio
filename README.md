@@ -1,29 +1,43 @@
-# Welcome to your Lovable project
+# Wisnu Akbar Aridho — Portfolio
 
-This project was built with [Lovable](https://lovable.dev).
+A premium dark-blue/cyan personal portfolio with a full content management area.
 
-## Build with Lovable
+## Public pages
 
-Open your project in the [Lovable editor](https://lovable.dev) and keep building.
+| Path | Content |
+| --- | --- |
+| `/` | Hero, about, featured projects, skills, experience, services, contact |
+| `/about` | Full bio, stats, portrait, resume link |
+| `/projects` | All published projects with filtering |
+| `/projects/$slug` | Case study, gallery lightbox, next project |
+| `/skills`, `/experience`, `/services`, `/contact` | Dedicated pages |
+| `/sitemap.xml`, `/robots.txt` | SEO |
 
-- **Ship faster**: describe what you want to build and Lovable handles the code.
-- **Stay in sync**: connect the project to GitHub and every change made in Lovable is committed straight to your repository.
-- **Full ownership**: this code is yours. Push to your repository and your changes sync back into Lovable, ready for your next prompt.
+## Admin
 
-## Development
+1. Sign in at `/login` (email + password, or Google).
+2. The first registered account becomes the administrator.
+3. Manage everything at `/admin`: dashboard, projects (drafts, featured, gallery),
+   about/profile, skills, experience, services, social links, media library, password.
 
-Prefer working locally? You need Node.js and npm — [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating).
+Changes save straight to the database and appear on the public site immediately.
+Only published projects are visible to visitors.
+
+## Content and assets
+
+- Portrait placeholder: `public/images/profile.jpg` (replaceable from the About screen).
+- Logo: `public/images/logo.png`.
+- Uploads: images and PDFs up to 5MB, stored in a private bucket and served through
+  `/api/public/media/*`.
+
+## Stack
+
+TanStack Start (React 19, Vite 7), Tailwind CSS v4, motion, TanStack Query,
+Lovable Cloud (Postgres + Auth + Storage) with row-level security on every table.
+
+## Local development
 
 ```sh
-git clone <this-repository-url>
-cd <repository-name>
 npm i
 npm run dev
 ```
-
-## Built with
-
-- TanStack Start
-- TypeScript
-- React
-- Tailwind CSS

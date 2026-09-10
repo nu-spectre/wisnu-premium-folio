@@ -27,7 +27,7 @@ export function CustomCursor() {
       const el = e.target as HTMLElement | null;
       const tagged = el?.closest<HTMLElement>("[data-cursor]");
       if (tagged) {
-        setMode((tagged.dataset.cursor as Mode) ?? "hover");
+        setMode((tagged.dataset['cursor'] as Mode) ?? "hover");
       } else if (el?.closest("a, button, [role='button'], input, textarea, select, label")) {
         setMode("hover");
       } else {

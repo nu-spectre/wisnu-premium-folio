@@ -6,7 +6,7 @@ import { Field } from "@/components/admin/AdminUI";
 import type { Experience } from "@/lib/types";
 
 export const Route = createFileRoute("/_authenticated/admin/experience")({
-  validateSearch: (s: Record<string, unknown>) => ({ new: s.new === true || s.new === "true" ? true : undefined }),
+  validateSearch: (s: Record<string, unknown>) => ({ new: s['new'] === true || s['new'] === "true" ? true : undefined }),
   component: ExperienceAdmin,
 });
 
@@ -38,7 +38,7 @@ function ExperienceAdmin() {
       toRow={(f) => ({ company: f.company, role: f.role, start_date: f.start_date, end_date: f.end_date || null, description: f.description, technologies: splitList(f.technologies) })}
       labelOf={(r) => `${r.role} at ${r.company}`}
       openNew={search.new}
-      onOpenedNew={() => navigate({ to: "/admin/experience", search: {}, replace: true })}
+      onOpenedNew={() => navigate({ to: "/admin/experience", search: { new: undefined }, replace: true })}
       renderRow={(r) => (
         <div>
           <p className="font-display text-sm">{r.role} <span className="text-muted-foreground">· {r.company}</span></p>

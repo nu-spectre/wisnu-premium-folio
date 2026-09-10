@@ -66,7 +66,7 @@ function ProjectEditor() {
       client: form.client ?? "", role: form.role ?? "", project_url: form.project_url ?? "", github_url: form.github_url ?? "",
       overview: form.overview ?? "", challenge: form.challenge ?? "", solution: form.solution ?? "", process: form.process ?? "", result: form.result ?? "",
     });
-    if (!parsed.success) return void toast.error(parsed.error.issues[0].message);
+    if (!parsed.success) return void toast.error(parsed.error.issues[0]?.message ?? "Invalid input");
     setSaving(true);
     const d = parsed.data;
     const { error } = await supabase.from("projects").update({

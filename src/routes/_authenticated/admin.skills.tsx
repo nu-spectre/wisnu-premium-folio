@@ -6,7 +6,7 @@ import { Field } from "@/components/admin/AdminUI";
 import type { Skill } from "@/lib/types";
 
 export const Route = createFileRoute("/_authenticated/admin/skills")({
-  validateSearch: (s: Record<string, unknown>) => ({ new: s.new === true || s.new === "true" ? true : undefined }),
+  validateSearch: (s: Record<string, unknown>) => ({ new: s['new'] === true || s['new'] === "true" ? true : undefined }),
   component: SkillsAdmin,
 });
 
@@ -36,7 +36,7 @@ function SkillsAdmin() {
       toRow={(f) => ({ name: f.name, category: f.category, icon: f.icon || null, description: f.description || null })}
       labelOf={(r) => r.name}
       openNew={search.new}
-      onOpenedNew={() => navigate({ to: "/admin/skills", search: {}, replace: true })}
+      onOpenedNew={() => navigate({ to: "/admin/skills", search: { new: undefined }, replace: true })}
       renderRow={(r) => (
         <div className="flex items-center gap-3">
           <span className="font-display text-sm">{r.icon ? `${r.icon} ` : ""}{r.name}</span>
